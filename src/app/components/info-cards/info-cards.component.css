@@ -1,3 +1,40 @@
 .container{
-    margin-top: 100px;
+    margin: 30px;
+}
+
+.card-style{
+    width: 250px;
+    height: 100px!important;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+}
+.image-card{
+    height: 70px;
+    width: 100px;
+}
+
+.card-body{
+    width: 150px;
+}
+
+.cards-angular{
+    margin-bottom: 20px;
+}
+
+.section-container{
+    margin-bottom: 40px;
+}
+
+.border-red{
+    border-color: rgb(219, 23, 23);
+}
+
+.border-blue{
+    border-color: rgb(43, 188, 236);
+}
+
+.border-orange{
+    border-color: rgb(228, 150, 5);
 }

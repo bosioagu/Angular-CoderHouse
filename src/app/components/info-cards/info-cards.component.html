@@ -1,31 +1,50 @@
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+  <div class="section-container">
+    <h3>Listado de Estudiantes</h3>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div *ngFor="let student of studentsList">
         <div class="col">
-          <div class="card h-100">
-            <img src="../../../assets/taj-maha.jpg" class="card-img-top" alt="...">
+          <div class="card h-100 card-style" [ngClass]="student.course == 'Angular' ? 'border-red' : student.course == 'React' ? 'border-blue': student.course == 'Java' ? 'border-orange': 'border-orange'">
+            <img [src]="student.courseLogo" class="card-img-top image-card" alt="..." />
             <div class="card-body">
-              <h5 class="card-title">Taj Mahal</h5>
-              <p class="card-text">Mausoleo construido por el emperador mogol Sha Jahan en honor a su esposa preferida, Mumtaz Mahal.</p>
+              <h5 class="card-title">
+                {{ student.name }}  <br/> {{ student.lastname }}
+              </h5>
+              <p class="card-text">{{ student.course }}</p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src="../../../assets/colosseum-g8dc54cfe5_1920.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Coliseo</h5>
-              <p class="card-text">El Coliseo albergó espectáculos como las venationes (peleas de animales) o los noxii (ejecuciones de prisioneros por animales), así como las munera: peleas de gladiadores.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src="../../../assets/architecture-g58e934422_1920.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Torre Eiffel</h5>
-              <p class="card-text">Gracias a su altura y a su silueta única a nivel mundial en el paisaje parisino, la Torre Eiffel se convirtió rápidamente en una de las atracciones más populares de París..</p>
-            </div>
-          </div>
-        </div>
+      </div>
     </div>
+  </div>
+  
+  <div class="section-container">
+    <h3>Estudiantes de Angular</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div >
+        <div class="col" *ngFor="let student of studentsList" >
+          <div class="card h-100 card-style cards-angular" *ngIf="student.course == 'Angular'" [style.border]="student.age > 20 ? '1px solid black' : '1px solid red'">
+            <img [src]="student.courseLogo" class="card-img-top image-card" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">
+                {{ student.name }}   <br/> {{ student.lastname }}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-container">
+    <h5> Mejores estudiantes hasta el dia: {{ date | date:'dd/MM' }}</h5>
+    <div *ngFor="let student of studentsList">
+      <div [ngSwitch]="student.averageGrade">
+        <div *ngSwitchCase="10"> <strong>{{ student.name | uppercase }}</strong> Tiene Promedio Perfecto ({{ student.averageGrade }}) </div>
+        <div *ngSwitchCase="9">{{ student.name }} Se encuentra cerca de los mejores estudiantes ({{ student.averageGrade }}) </div>
+      </div>
+    </div>
+  </div>
+
 </div>
