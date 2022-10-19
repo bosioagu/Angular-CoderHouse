@@ -1,9 +1,10 @@
 export interface Student {
+    id: number;
     name: string,
     lastname: string,
     age: number,
-    course: string,
-    courseLogo: string,
-    averageGrade: number,
-
+    cellPhoneNumber: string,
+    languagePrefer: string,
+    username: string,
+    password: string
 }

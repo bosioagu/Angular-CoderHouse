@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { DataStudents } from 'src/app/data/dataStudent';
 import { Student } from 'src/app/interfaces/Student';
 
 @Component({
@@ -9,38 +10,41 @@ import { Student } from 'src/app/interfaces/Student';
 })
 export class StudentsTableComponent implements OnInit {
 
-  estudiantes: Student[] = [
-    {name: "Francisco", lastname: "Perez", age: 19, course: "Angular", courseLogo: "../../../assets/logos/angular.svg", averageGrade: 10},
-    {name: "Esteban", lastname: "Garcia", age: 22, course: "React", courseLogo: "../../../assets/logos/react.svg", averageGrade: 7},
-    {name: "Mauricio", lastname: "Fernandez", age: 21, course: "Angular", courseLogo: "../../../assets/logos/angular.svg", averageGrade: 9},
-    {name: "Diego", lastname: "Diaz", age: 34, course: "Angular", courseLogo: "../../../assets/logos/angular.svg", averageGrade: 5},
-    {name: "Santiago", lastname: "Morales", age: 47, course: "Java", courseLogo: "../../../assets/logos/java.svg", averageGrade: 7}
-  ]
-
+  students: Student[] = DataStudents.students;
   columnas:string[] = [ 'nombre', 'curso', 'edad', 'acciones'];
-  dataSoutce: MatTableDataSource<Student> = new MatTableDataSource<Student> (this.estudiantes)
+  dataSource: MatTableDataSource<Student> = new MatTableDataSource<Student> (this.students);
+
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.dataSource)
   }
 
   filtrarCurso(event:Event){
     const valorObtenido = (event.target as HTMLInputElement).value;
-    this.dataSoutce.filterPredicate = function (estudiantes: Student, filtro: string){
-      return estudiantes.course.toLowerCase().includes(filtro.toLowerCase());
+    console.log(valorObtenido)
+    this.dataSource.filterPredicate = function (estudiantes: Student, filtro: string){
+      return estudiantes.languagePrefer.toLowerCase().includes(filtro.toLowerCase());
     }
-    this,this.dataSoutce.filter = valorObtenido.trim().toLowerCase();
+    this.dataSource.filter = valorObtenido.trim().toLowerCase();
   }
 
   filtrarAlumno(event:Event){
     const valorObtenido = (event.target as HTMLInputElement).value;
-    this.dataSoutce.filterPredicate = function (estudiantes: Student, filtro: string){
-      return estudiantes.name.toLowerCase().includes(filtro.toLowerCase());
+    this.dataSource.filterPredicate = function (estudiantes: Student, filtro: string){
+      let fullname = estudiantes.name + estudiantes.lastname
+      return fullname.toLowerCase().includes(filtro.toLowerCase());
     }
-    this,this.dataSoutce.filter = valorObtenido.trim().toLowerCase();
+    this.dataSource.filter = valorObtenido.trim().toLowerCase();
   }
 
   editar(){
-    console.log(this.estudiantes)
+    console.log(this.students)
+  }
+
+  deleteStudent(id : number){
+    let position = this.students.findIndex(student => student.id == id)
+    this.students.splice(position, 1)
+    this.dataSource.data = this.students;
   }
 }

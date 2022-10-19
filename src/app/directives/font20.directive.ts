@@ -5,7 +5,7 @@ import { Directive, Input,ElementRef, Renderer2 } from '@angular/core';
 })
 export class Font20Directive {
 
-  @Input() appContenteditableModel: string | undefined;
+  @Input() title: string | undefined;
 
   constructor(
     private elemento: ElementRef,

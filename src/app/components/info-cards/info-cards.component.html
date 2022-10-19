@@ -1,22 +1,26 @@
 <div class="container">
+  <app-form></app-form>
+  <app-students-table></app-students-table>
 
+ <!--
   <div class="section-container">
     <h3 appFont20>Listado de Estudiantes</h3>
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <div *ngFor="let student of studentsList">
         <div class="col">
-          <div class="card h-100 card-style" [ngClass]="student.course == 'Angular' ? 'border-red' : student.course == 'React' ? 'border-blue': student.course == 'Java' ? 'border-orange': 'border-orange'">
-            <img [src]="student.courseLogo" class="card-img-top image-card" alt="..." />
+        
+            <div class="card h-100 card-style" [ngClass]="student.languagePrefer == 'Angular' ? 'border-red' : student.course == 'React' ? 'border-blue': student.course == 'Java' ? 'border-orange': 'border-orange'">
+              <img [src]="student.courseLogo" class="card-img-top image-card" alt="..." />
             <div class="card-body">
+    
               <h5 class="card-title">
                 {{ student.name }}  <br/> {{ student.lastname }}
               </h5>
-              <p class="card-text">{{ student.course }}</p>
+              <p class="card-text">{{ student.languagePrefer }}</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
   
   <div class="section-container">
@@ -24,8 +28,11 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div >
         <div class="col" *ngFor="let student of studentsList" >
-          <div class="card h-100 card-style cards-angular" *ngIf="student.course == 'Angular'" [style.border]="student.age > 20 ? '1px solid black' : '1px solid red'">
+        
+           <div class="card h-100 card-style cards-angular" *ngIf="student.course == 'Angular'" [style.border]="student.age > 20 ? '1px solid black' : '1px solid red'">
             <img [src]="student.courseLogo" class="card-img-top image-card" alt="..." />
+            
+               
             <div class="card-body">
               <h5 class="card-title">
                 {{ student.name }}   <br/> {{ student.lastname }}
@@ -34,20 +41,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+-->
 
-  <div class="section-container">
-    <h5 appFont20> Mejores estudiantes hasta el dia: {{ date | date:'dd/MM' }}</h5>
-    <div *ngFor="let student of studentsList">
-      <div [ngSwitch]="student.averageGrade">
-        <div *ngSwitchCase="10"> <strong>{{ student.name | uppercase }}</strong> Tiene Promedio Perfecto ({{ student.averageGrade }}) </div>
-        <div *ngSwitchCase="9">{{ student.name }} Se encuentra cerca de los mejores estudiantes ({{ student.averageGrade }}) </div>
-      </div>
-    </div>
-  </div>
-
-  <app-form></app-form>
-  <app-students-table></app-students-table>
-  <app-course-table></app-course-table>
 </div>
+
+

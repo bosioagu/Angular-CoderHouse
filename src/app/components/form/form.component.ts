@@ -1,5 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { DataStudents } from 'src/app/data/dataStudent';
+import { Student } from 'src/app/interfaces/Student';
 
 @Component({
   selector: 'app-form',
@@ -7,13 +10,22 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, ValidatorFn, Vali
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+  
+  students: Student[] = DataStudents.students;
+
+  newUser : any
 
   alertStudent: boolean;
-  nameUser: string;
-  cellNumber: string | null | undefined;
-  languajeSelect: any[] | undefined;
 
+  id: number = 0;
+  name: string  =  "";
+  lastname: string =  "";
+  age: number = 0;
+  cellPhoneNumber: string | undefined | null =  "";
+  username: string =  "";
+  password: string =  "";
 
+  @Input () dataSource : any
   @Output() addUsuario: EventEmitter<any> = new EventEmitter<any>();
 
   form = this.formBuilder.group({
@@ -22,16 +34,15 @@ export class FormComponent implements OnInit {
     cellPhoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    languagePrefer: new FormArray([new FormControl()])
+    age: ['', [Validators.required]],
+    languagePrefer: new FormArray([new FormControl()]),
+    
   });
   
   constructor(
     private formBuilder: FormBuilder
   ) {
     this.alertStudent = false;
-    this.nameUser = "";
-    this.cellNumber = "";
-    this.languajeSelect = [];
    }
 
   ngOnInit(): void {
@@ -40,13 +51,37 @@ export class FormComponent implements OnInit {
   submitForm(): void {
     console.log(this.form.value);
     this.addUsuario.emit(this.form.value);
-
-    let strUser = "El ultimo estudiante en ingresar al curso es " + this.form.value.name + " " + this.form.value.lastname + " y está buscando perfeccionarse en " + this.form.value.languagePrefer
-    this.nameUser = this.form.value.name + " " + this.form.value.lastname
-    this.cellNumber = this.form.value.cellPhoneNumber
-    this.languajeSelect = this.form.value.languagePrefer
-    console.log(strUser)
+    let id = this.students.length + 1
+    let name = this.form.value.name  
+    let lastname = this.form.value.lastname  
+    let cellPhoneNumber = this.form.value.cellPhoneNumber
+    let languagePrefer = this.form.value.languagePrefer
+    let username = this.form.value.username
+    let password = this.form.value.password
+    
     this.alertStudent = true;
+
+    let studentAdd= {
+      id: id,
+      name: name,
+      lastname: lastname,
+      age: this.age,
+      cellPhoneNumber: cellPhoneNumber,
+      languagePrefer: languagePrefer,
+      username: username,
+      password: password
+
+    }
+    this.newUser= studentAdd
+    console.log(this.newUser)
+    this.addToStudentList()
+    this.form.reset()
+  }
+
+  addToStudentList(){
+ 
+    this.dataSource=  this.students.push( this.newUser)
+    console.log("addToStudentList", this.dataSource)
   }
 
   get languagePrefer(): FormArray {
@@ -57,7 +92,6 @@ export class FormComponent implements OnInit {
     this.languagePrefer.push(new FormControl());
   }
   
-  close(){
-    this.alertStudent = false;
-  }
+
+
 }
